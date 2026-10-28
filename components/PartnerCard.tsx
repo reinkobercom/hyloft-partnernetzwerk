@@ -50,7 +50,7 @@ export default function PartnerCard({ p }: { p: Treffer }) {
             <h3 className="mt-1 text-lg font-semibold text-ink group-hover:text-forest">{p.firma}</h3>
             <p className="mt-0.5 text-sm text-muted">
               {p.ort}
-              {p.distanz !== undefined && <> · ca. {p.distanz} km entfernt</>}
+              {p.distanz !== undefined && <> · {p.distanz < 3 ? "direkt vor Ort" : `ca. ${p.distanz} km entfernt`}</>}
             </p>
           </div>
         </div>
