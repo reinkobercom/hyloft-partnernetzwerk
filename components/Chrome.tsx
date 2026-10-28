@@ -2,10 +2,16 @@ import Link from "next/link";
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
-    <Link href="/" className="group inline-flex flex-col leading-none" aria-label="Hyloft Partnernetz Startseite">
-      <span className={`text-[1.35rem] font-medium tracking-[0.14em] ${light ? "text-white" : "text-forest"}`}>HYLOFT</span>
-      <span className={`mt-1 text-[0.58rem] font-semibold tracking-[0.42em] ${light ? "text-mint-strong" : "text-muted"}`}>
-        PARTNERNETZ
+    <Link href="/" className="group inline-flex w-[132px] flex-col leading-none" aria-label="Hyloft Partnernetz Startseite">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={light ? "/img/logo-white.png" : "/img/logo-forest.png"} alt="Hyloft" width={132} height={18} className="h-[18px] w-[132px]" />
+      <span
+        className={`mt-[7px] flex justify-between text-[0.6rem] font-medium ${light ? "text-white/85" : "text-forest"}`}
+        aria-hidden
+      >
+        {"PARTNERNETZ".split("").map((c, i) => (
+          <span key={i}>{c}</span>
+        ))}
       </span>
     </Link>
   );
@@ -30,6 +36,12 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
             className={`hidden rounded-full px-4 py-2 sm:inline-block ${overlay ? "text-white/85 hover:text-white" : "text-muted hover:text-ink"}`}
           >
             Partner finden
+          </Link>
+          <Link
+            href="/blog"
+            className={`hidden rounded-full px-4 py-2 sm:inline-block ${overlay ? "text-white/85 hover:text-white" : "text-muted hover:text-ink"}`}
+          >
+            Ratgeber
           </Link>
           <Link
             href="/login"
@@ -66,6 +78,7 @@ export function Footer() {
           <p className="eyebrow mb-4 text-mint-strong">Für Bauherren</p>
           <ul className="space-y-2.5">
             <li><Link href="/suche" className="hover:text-white">Partner finden</Link></li>
+            <li><Link href="/blog" className="hover:text-white">Ratgeber & Blog</Link></li>
             <li><a href="https://www.hyloft.de" className="hover:text-white">Lofttür konfigurieren</a></li>
             <li><a href="https://www.hyloft.de" className="hover:text-white">Showroom Lüdinghausen</a></li>
           </ul>

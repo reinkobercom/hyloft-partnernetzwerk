@@ -17,6 +17,7 @@ Freischaltungsanruf durch Hyloft live.
 | `/registrieren` | 3-stufige Registrierung |
 | `/partnerbereich` | Partnerbereich: Status, Profil-Fortschritt, Lofttür-Partnerservice |
 | `/login` | Demo-Login |
+| `/blog`, `/blog/[slug]` | Ratgeber mit Beispielartikeln (Daten in `lib/blog.ts`) |
 
 ## Entwicklung
 

@@ -3,6 +3,8 @@ import { Header, Footer } from "@/components/Chrome";
 import SearchBar from "@/components/SearchBar";
 import PartnerCard from "@/components/PartnerCard";
 import { GEWERKE, PARTNER } from "@/lib/data";
+import BlogCard from "@/components/BlogCard";
+import { ARTIKEL } from "@/lib/blog";
 
 const GEWERK_ICONS: Record<string, React.ReactNode> = {
   innenarchitektur: <path d="M4 20h16M6 20V9l6-5 6 5v11M10 20v-5h4v5" />,
@@ -162,6 +164,22 @@ export default function Home() {
                 </a>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* RATGEBER */}
+        <section className="mx-auto max-w-6xl px-4 pt-24 sm:px-6">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <p className="eyebrow text-muted">Ratgeber</p>
+              <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Gut geplant ist halb gebaut.</h2>
+            </div>
+            <Link href="/blog" className="text-sm font-semibold text-forest hover:underline">Alle Artikel →</Link>
+          </div>
+          <div className="mt-10 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+            {ARTIKEL.slice(0, 3).map((a) => (
+              <BlogCard key={a.slug} a={a} />
+            ))}
           </div>
         </section>
 
