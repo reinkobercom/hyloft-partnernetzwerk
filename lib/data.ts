@@ -351,3 +351,65 @@ export function initialen(firma: string) {
     .map((w) => w[0])
     .join("");
 }
+
+// ---------- SEO-Slugs ----------
+
+/** URL-Slug je Gewerk für Seiten wie /tischler/muenster */
+export const GEWERK_SEO: Record<string, { slug: string; singular: string }> = {
+  innenarchitektur: { slug: "innenarchitekten", singular: "Innenarchitekt" },
+  tischlerei: { slug: "tischler", singular: "Tischler" },
+  innenausbau: { slug: "innenausbauer", singular: "Innenausbauer" },
+  trockenbau: { slug: "trockenbauer", singular: "Trockenbauer" },
+  maler: { slug: "maler", singular: "Maler" },
+  boden: { slug: "bodenleger", singular: "Bodenleger" },
+};
+
+export function ortSlug(name: string) {
+  return name
+    .toLowerCase()
+    .replace(/ä/g, "ae")
+    .replace(/ö/g, "oe")
+    .replace(/ü/g, "ue")
+    .replace(/ß/g, "ss")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+export const gewerkBySeo = (slug: string) => GEWERKE.find((g) => GEWERK_SEO[g.slug]?.slug === slug);
+export const ortBySlug = (slug: string) => ORTE.find((o) => ortSlug(o.name) === slug);
+
+// ---------- Referenzprojekte (von Hyloft gepflegt) ----------
+
+export type Referenz = {
+  id: string;
+  titel: string;
+  ort: string;
+  jahr: number;
+  bild: string;
+  tuer: string;
+  partner: string[]; // Partner-Slugs
+};
+
+export const REFERENZEN: Referenz[] = [
+  { id: "r1", titel: "Offener Wohnbereich mit Lofttür und Seitenteil", ort: "Senden", jahr: 2026, bild: "/img/p13.jpg", tuer: "Drehtür mit Seitenteil, 4 Sprossen", partner: ["raumgefuehl-innenarchitektur-senden", "parkettmanufaktur-terhorst-coesfeld"] },
+  { id: "r2", titel: "Garderobe und Lofttür im Neubau", ort: "Lüdinghausen", jahr: 2026, bild: "/img/p18.jpg", tuer: "Drehtür mit Oberlicht", partner: ["tischlerei-brockmann-luedinghausen"] },
+  { id: "r3", titel: "Büro mit Glastrennwänden", ort: "Hamm", jahr: 2025, bild: "/img/p17.jpg", tuer: "Trennwand mit satiniertem Mittelfeld", partner: ["ausbau-plus-hamm"] },
+  { id: "r4", titel: "Treppenhaus-Abtrennung im Einfamilienhaus", ort: "Dortmund", jahr: 2025, bild: "/img/p2.jpg", tuer: "Doppeltür mit Festelement", partner: ["kaiser-innenausbau-dortmund", "wandwerk-trockenbau-werne"] },
+  { id: "r5", titel: "Altbau-Umbau mit Doppelflügeltür", ort: "Bochum", jahr: 2025, bild: "/img/p10.jpg", tuer: "Zweiflügelige Drehtür", partner: ["studio-lichtung-bochum"] },
+  { id: "r6", titel: "Lichtdurchflutete Diele", ort: "Münster", jahr: 2026, bild: "/img/p3.jpg", tuer: "Drehtür mit Seitenteil", partner: ["atelier-raumform-muenster"] },
+];
+
+export const referenzenFuer = (partnerSlug: string) => REFERENZEN.filter((r) => r.partner.includes(partnerSlug));
+
+// ---------- Dummy-Statistik ----------
+
+export function statistik(seed: string) {
+  let h = 0;
+  for (const c of seed) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  const rnd = () => ((h = (h * 1103515245 + 12345) >>> 0) % 1000) / 1000;
+  const monate = ["Mai", "Jun", "Jul", "Aug", "Sep", "Okt"];
+  return monate.map((m, i) => {
+    const aufrufe = Math.round(40 + i * 18 + rnd() * 40);
+    return { monat: m, aufrufe, anfragen: Math.max(0, Math.round(aufrufe / 22 + rnd() * 2 - 1)) };
+  });
+}

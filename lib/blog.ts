@@ -1,6 +1,7 @@
 // Klickdummy: Beispielartikel für den Blogbereich.
+import { ENTWUERFE } from "./artikel-entwuerfe";
 
-export type Block = { h2: string } | { p: string } | { tipp: string } | { liste: string[] };
+export type Block = { h2: string } | { h3: string } | { p: string } | { tipp: string } | { liste: string[] };
 
 export type Artikel = {
   slug: string;
@@ -12,12 +13,14 @@ export type Artikel = {
   bild: string;
   autor: string;
   cta?: { text: string; was: string };
+  keywords?: string[];
+  entwurf?: boolean;
   inhalt: Block[];
 };
 
 export const KATEGORIEN = ["Planung", "Ausbau", "Für Betriebe"] as const;
 
-export const ARTIKEL: Artikel[] = [
+const BASIS: Artikel[] = [
   {
     slug: "wanddurchbruch-fuer-lofttuer",
     titel: "Wanddurchbruch für eine Lofttür: Darauf kommt es an",
@@ -141,6 +144,12 @@ export const ARTIKEL: Artikel[] = [
     ],
   },
 ];
+
+// Ausführliche Entwürfe (zur fachlichen Freigabe durch Hyloft) ersetzen die Kurzfassungen
+export const ARTIKEL: Artikel[] = BASIS.map((a) => {
+  const e = ENTWUERFE.find((x) => x.slug === a.slug);
+  return e ? { ...a, ...e, entwurf: true } : a;
+});
 
 export const artikelBySlug = (slug: string) => ARTIKEL.find((a) => a.slug === slug);
 

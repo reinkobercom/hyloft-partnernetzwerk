@@ -17,7 +17,10 @@ Freischaltungsanruf durch Hyloft live.
 | `/registrieren` | 3-stufige Registrierung |
 | `/partnerbereich` | Partnerbereich: Status, Profil-Fortschritt, Lofttür-Partnerservice |
 | `/login` | Demo-Login |
-| `/blog`, `/blog/[slug]` | Ratgeber mit Beispielartikeln (Daten in `lib/blog.ts`) |
+| `/blog`, `/blog/[slug]` | Ratgeber; ausführliche Entwürfe in `lib/artikel-entwuerfe.ts` (Freigabe ausstehend) |
+| `/anfrage` | Eine Anfrage an bis zu 3 Betriebe |
+| `/[gewerk]/[stadt]` | 120 SEO-Seiten, z. B. `/tischler/muenster`; Übersicht unter `/regionen` |
+| `/admin` | Admin: Freischaltungen, Partner, Anfragen, Referenzprojekte, E-Mail-Vorlagen |
 
 ## Entwicklung
 

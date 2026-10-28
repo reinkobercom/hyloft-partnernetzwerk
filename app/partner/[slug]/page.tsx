@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Header, Footer } from "@/components/Chrome";
 import { Avatar, Badge, Check } from "@/components/PartnerCard";
 import ContactForm from "@/components/ContactForm";
-import { PARTNER, gewerkBySlug, partnerBySlug } from "@/lib/data";
+import { PARTNER, gewerkBySlug, partnerBySlug, referenzenFuer } from "@/lib/data";
 
 export function generateStaticParams() {
   return PARTNER.map((p) => ({ slug: p.slug }));
@@ -21,6 +21,7 @@ export default async function PartnerPage({ params }: { params: Promise<{ slug: 
   const p = partnerBySlug(slug);
   if (!p) notFound();
   const g = gewerkBySlug(p.gewerk);
+  const refs = referenzenFuer(p.slug);
   const aehnliche = PARTNER.filter((x) => x.gewerk === p.gewerk && x.slug !== p.slug).slice(0, 2);
 
   return (
@@ -85,6 +86,27 @@ export default async function PartnerPage({ params }: { params: Promise<{ slug: 
                 </div>
               ))}
             </dl>
+
+            {refs.length > 0 && (
+              <section className="mt-10">
+                <div className="flex items-center gap-3">
+                  <h2 className="text-lg font-semibold">Gemeinsame Projekte mit Hyloft</h2>
+                  <span className="rounded-full bg-mint px-2.5 py-1 text-[0.7rem] font-semibold text-forest">{refs.length}</span>
+                </div>
+                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                  {refs.map((r) => (
+                    <figure key={r.id} className="overflow-hidden rounded-3xl border border-line bg-white">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={r.bild} alt="" className="aspect-[4/3] w-full object-cover" />
+                      <figcaption className="p-4">
+                        <p className="font-semibold leading-snug">{r.titel}</p>
+                        <p className="mt-1 text-xs text-muted">{r.ort} · {r.jahr} · {r.tuer}</p>
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {p.verifiziert && (
               <div className="mt-10 flex gap-4 rounded-3xl bg-stone p-6">

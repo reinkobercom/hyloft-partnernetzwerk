@@ -33,6 +33,11 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
             </Link>
             <h1 className="rise mt-6 text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">{a.titel}</h1>
             <p className="rise rise-2 mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted">{a.teaser}</p>
+            {a.entwurf && (
+              <p className="mx-auto mt-6 w-fit rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-800 ring-1 ring-amber-200">
+                Entwurf · fachliche Freigabe durch Hyloft ausstehend
+              </p>
+            )}
             <p className="mt-6 text-sm text-muted">
               {a.autor} · {datumDE(a.datum)} · {a.lesezeit} Min. Lesezeit
             </p>
@@ -46,6 +51,7 @@ export default async function ArtikelPage({ params }: { params: Promise<{ slug: 
           <div className="mx-auto mt-12 max-w-2xl px-4 sm:px-6">
             {a.inhalt.map((b, i) => {
               if ("h2" in b) return <h2 key={i} className="mt-12 text-2xl font-semibold tracking-tight text-ink">{b.h2}</h2>;
+              if ("h3" in b) return <h3 key={i} className="mt-8 text-lg font-semibold text-ink">{b.h3}</h3>;
               if ("p" in b) return <p key={i} className="mt-5 text-[1.05rem] leading-[1.8] text-ink/85">{b.p}</p>;
               if ("liste" in b)
                 return (

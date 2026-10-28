@@ -78,6 +78,8 @@ export function Footer() {
           <p className="eyebrow mb-4 text-mint-strong">Für Bauherren</p>
           <ul className="space-y-2.5">
             <li><Link href="/suche" className="hover:text-white">Partner finden</Link></li>
+            <li><Link href="/anfrage" className="hover:text-white">Eine Anfrage an mehrere</Link></li>
+            <li><Link href="/regionen" className="hover:text-white">Betriebe nach Region</Link></li>
             <li><Link href="/blog" className="hover:text-white">Ratgeber & Blog</Link></li>
             <li><a href="https://www.hyloft.de" className="hover:text-white">Lofttür konfigurieren</a></li>
             <li><a href="https://www.hyloft.de" className="hover:text-white">Showroom Lüdinghausen</a></li>

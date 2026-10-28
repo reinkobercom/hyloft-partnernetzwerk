@@ -51,6 +51,9 @@ export default function Home() {
               </Link>
             ))}
           </div>
+          <Link href="/anfrage" className="rise rise-4 mt-6 text-sm font-medium text-white/80 underline-offset-4 hover:text-white hover:underline">
+            Oder: Projekt einmal beschreiben und bis zu 3 Betriebe erreichen →
+          </Link>
         </div>
       </section>
 
