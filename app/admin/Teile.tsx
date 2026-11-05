@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { adminAnlegen, loginLinkSenden, referenzAnlegen, zugangAnlegen } from "./actions";
+import { adminAnlegen, loginLinkSenden, referenzAnlegen, testmailSenden, zugangAnlegen } from "./actions";
 import { Absenden, Meldung, inputCls, labelCls, useFormular } from "@/components/Formular";
 import { FotosUpload } from "@/components/BildUpload";
 
@@ -135,5 +135,16 @@ export function TeamForm() {
         </form>
       )}
     </div>
+  );
+}
+
+export function TestmailForm({ standard }: { standard: string }) {
+  const { status, onSubmit, pending } = useFormular(testmailSenden);
+  return (
+    <form onSubmit={onSubmit} className="grid gap-3 rounded-2xl bg-white p-5 sm:grid-cols-[1fr_auto] sm:items-center">
+      <input name="an" type="email" defaultValue={standard} className={inputCls} />
+      <Absenden pending={pending}>Testmail senden</Absenden>
+      <div className="sm:col-span-2"><Meldung status={status} /></div>
+    </form>
   );
 }

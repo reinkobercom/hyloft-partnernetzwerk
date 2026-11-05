@@ -1,7 +1,10 @@
 import { sql } from "@/lib/db";
-import { mailKonfiguriert } from "@/lib/mail";
+import { MAIL_ABSENDER_ANZEIGE, mailKonfiguriert } from "@/lib/mail";
+import { nutzerPflicht } from "@/lib/auth";
+import { TestmailForm } from "../Teile";
 
 export default async function Emails() {
+  const ich = await nutzerPflicht("admin");
   const rows = await sql()<{ id: string; an: string; betreff: string; text: string; status: string; fehler: string; created_at: Date }[]>`
     select * from email_log order by created_at desc limit 150`;
   return (
@@ -10,6 +13,10 @@ export default async function Emails() {
       <p className="mt-1 text-sm text-muted">
         {mailKonfiguriert ? "Versand über Resend ist aktiv." : "Versand noch nicht eingerichtet – Mails werden nur protokolliert."} Die letzten 150 Mails.
       </p>
+      <div className="mt-6">
+        <p className="mb-2 text-sm text-muted">Absender: <strong className="text-ink">{MAIL_ABSENDER_ANZEIGE}</strong></p>
+        <TestmailForm standard={ich.email} />
+      </div>
       {rows.length === 0 && <p className="mt-6 rounded-3xl bg-white p-10 text-center text-muted">Noch keine E-Mails.</p>}
       <div className="mt-6 grid gap-3">
         {rows.map((m) => (

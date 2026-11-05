@@ -7,7 +7,7 @@ import { loginTokenAnlegen, nutzerPflicht } from "@/lib/auth";
 import { freierSlug, partnerRowById } from "@/lib/repo";
 import { profilAusFormular } from "@/lib/profil";
 import { hashPassword, startPasswort } from "@/lib/security";
-import { SITE_URL, mailKonfiguriert, sendeMail } from "@/lib/mail";
+import { SITE_URL, mailKonfiguriert, sendeMail, sendeMailMitDetails } from "@/lib/mail";
 import { slugify } from "@/lib/data";
 
 type Status = { fehler?: string; ok?: string } | null;
@@ -222,4 +222,15 @@ export async function adminEntfernen(fd: FormData) {
   if (!uid || uid === ich.id) return;
   await sql()`delete from users where id = ${uid} and role = 'admin'`;
   revalidatePath("/admin/team");
+}
+
+// ---------------- Mail-Test ----------------
+
+export async function testmailSenden(_: Status, fd: FormData): Promise<Status> {
+  const u = await nutzerPflicht("admin");
+  if (!mailKonfiguriert) return { fehler: "RESEND_API_KEY ist in dieser Umgebung nicht gesetzt. Nach dem Eintragen in Vercel muss neu deployt werden." };
+  const an = String(fd.get("an") || u.email).trim();
+  const r = await sendeMailMitDetails(an, "Testmail Hyloft Partnernetz", "Diese Testmail bestätigt, dass der E-Mail-Versand des Hyloft Partnernetzes funktioniert.");
+  revalidatePath("/admin/emails");
+  return r.status === "gesendet" ? { ok: `Resend hat die Mail an ${an} angenommen. Bitte Postfach (auch Spam) prüfen.` } : { fehler: `Resend meldet: ${r.fehler || r.status}` };
 }

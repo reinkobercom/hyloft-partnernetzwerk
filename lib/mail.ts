@@ -28,7 +28,7 @@ ${absaetze}${btn}
 }
 
 /** Sendet eine Mail über Resend (falls konfiguriert) und protokolliert sie immer. Wirft nie. */
-export async function sendeMail(an: string, betreff: string, text: string, knopf?: { text: string; url: string }) {
+export async function sendeMailMitDetails(an: string, betreff: string, text: string, knopf?: { text: string; url: string }) {
   const empfaenger = an.split(",").map((x) => x.trim()).filter(Boolean);
   const volltext = knopf ? `${text}\n\n${knopf.text}: ${knopf.url}` : text;
   let status: "gesendet" | "nicht_konfiguriert" | "fehler" = "nicht_konfiguriert";
@@ -50,8 +50,16 @@ export async function sendeMail(an: string, betreff: string, text: string, knopf
       fehler = String(e).slice(0, 300);
     }
   }
+  if (status !== "gesendet") console.error(`[mail] ${status} an ${empfaenger.join(", ")} („${betreff}“) ${fehler}`);
+  else console.log(`[mail] gesendet an ${empfaenger.join(", ")} („${betreff}“)`);
   try {
     await sql()`insert into email_log (an, betreff, text, status, fehler) values (${empfaenger.join(", ")}, ${betreff}, ${volltext}, ${status}, ${fehler})`;
   } catch {}
-  return status;
+  return { status, fehler };
 }
+
+export async function sendeMail(an: string, betreff: string, text: string, knopf?: { text: string; url: string }) {
+  return (await sendeMailMitDetails(an, betreff, text, knopf)).status;
+}
+
+export const MAIL_ABSENDER_ANZEIGE = ABSENDER;
