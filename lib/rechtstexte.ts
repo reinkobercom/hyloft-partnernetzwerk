@@ -102,9 +102,9 @@ export const DATENSCHUTZ: RBlock[] = [
   {
     p: "Rechtsgrundlage ist unser berechtigtes Interesse an einer sicheren, zuverlässigen und effizienten Bereitstellung der Plattform (Art. 6 Abs. 1 lit. f DSGVO).",
   },
-  { h3: "4.2 Datenbank durch Supabase" },
+  { h3: "4.2 Datenbank durch Neon" },
   {
-    p: "Für die Speicherung von Profilen, Registrierungen, Anfragen und Zugangsdaten nutzen wir den Datenbankdienst der Supabase Inc. [Anschrift ergänzen]. Die Daten werden auf Servern in Frankfurt am Main (Deutschland) gespeichert. Mit Supabase besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO [prüfen]. Da es sich um ein Unternehmen mit Sitz in den USA handelt, kann ein Zugriff aus den USA, etwa im Rahmen von Support oder Wartung, nicht vollständig ausgeschlossen werden; insoweit gelten die Ausführungen unter Ziffer 17 [prüfen, ob Supabase nach dem EU-US Data Privacy Framework zertifiziert ist bzw. Standardvertragsklauseln vereinbart sind].",
+    p: "Für die Speicherung von Profilen, Registrierungen, Anfragen und Zugangsdaten nutzen wir den Datenbankdienst der Neon Inc. [Anschrift ergänzen], den wir über Vercel beziehen. Die Daten werden auf Servern in Frankfurt am Main (Deutschland) gespeichert. Mit Neon besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO [prüfen]. Da es sich um ein Unternehmen mit Sitz in den USA handelt, kann ein Zugriff aus den USA, etwa im Rahmen von Support oder Wartung, nicht vollständig ausgeschlossen werden; insoweit gelten die Ausführungen unter Ziffer 17 [prüfen, ob Neon nach dem EU-US Data Privacy Framework zertifiziert ist bzw. Standardvertragsklauseln vereinbart sind].",
   },
   {
     p: "Rechtsgrundlage ist die jeweils zugrunde liegende Verarbeitung (siehe die folgenden Abschnitte) in Verbindung mit unserem berechtigten Interesse an einer sicheren Datenhaltung (Art. 6 Abs. 1 lit. f DSGVO).",
@@ -274,7 +274,7 @@ export const DATENSCHUTZ: RBlock[] = [
       "die von Bauherren ausgewählten Fachbetriebe (für Anfragen, als eigenständige Verantwortliche),",
       "Besucher der Plattform (für die öffentlichen Profildaten der Fachbetriebe),",
       "Vercel Inc. (Hosting, Auftragsverarbeiter),",
-      "Supabase Inc. (Datenbank, Auftragsverarbeiter),",
+      "Neon Inc. (Datenbank, Auftragsverarbeiter),",
       "Resend Inc. (E-Mail-Versand, Auftragsverarbeiter),",
       "OpenStreetMap Foundation (Auslieferung der Kartenkacheln beim Aufruf der Kartenansicht),",
       "Behörden und sonstige Stellen, soweit wir gesetzlich dazu verpflichtet sind.",
@@ -284,7 +284,7 @@ export const DATENSCHUTZ: RBlock[] = [
 
   { h2: "17. Übermittlung in Drittländer" },
   {
-    p: "Einige unserer Dienstleister haben ihren Sitz in den USA (Vercel, Supabase, Resend). Eine Übermittlung personenbezogener Daten in die USA erfolgt nur, soweit die Voraussetzungen der Art. 44 ff. DSGVO erfüllt sind. Für Unternehmen, die nach dem EU-US Data Privacy Framework zertifiziert sind, besteht ein Angemessenheitsbeschluss der Europäischen Kommission (Art. 45 DSGVO). Soweit eine solche Zertifizierung nicht besteht, stützen wir die Übermittlung auf die von der EU-Kommission erlassenen Standardvertragsklauseln (Art. 46 Abs. 2 lit. c DSGVO). [Für jeden Dienstleister prüfen und ergänzen: Zertifizierung ja/nein, Standardvertragsklauseln vereinbart ja/nein.]",
+    p: "Einige unserer Dienstleister haben ihren Sitz in den USA (Vercel, Neon, Resend). Eine Übermittlung personenbezogener Daten in die USA erfolgt nur, soweit die Voraussetzungen der Art. 44 ff. DSGVO erfüllt sind. Für Unternehmen, die nach dem EU-US Data Privacy Framework zertifiziert sind, besteht ein Angemessenheitsbeschluss der Europäischen Kommission (Art. 45 DSGVO). Soweit eine solche Zertifizierung nicht besteht, stützen wir die Übermittlung auf die von der EU-Kommission erlassenen Standardvertragsklauseln (Art. 46 Abs. 2 lit. c DSGVO). [Für jeden Dienstleister prüfen und ergänzen: Zertifizierung ja/nein, Standardvertragsklauseln vereinbart ja/nein.]",
   },
   {
     p: "Beim Laden der Kartenkacheln werden Daten an die OpenStreetMap Foundation im Vereinigten Königreich übermittelt; hierfür besteht ein Angemessenheitsbeschluss (siehe Ziffer 11).",

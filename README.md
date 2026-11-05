@@ -5,7 +5,7 @@ Innenausbauer, Trockenbauer, Maler, Bodenleger) in NRW. Betriebe tragen sich kos
 
 ## Technik
 
-- Next.js (App Router) auf Vercel, Postgres (Supabase, Region Frankfurt)
+- Next.js (App Router) auf Vercel, Postgres (Neon über den Vercel Marketplace, Region Frankfurt)
 - Login im Projekt selbst: Passwort (scrypt) oder Einmal-Link per E-Mail, Sitzung als httpOnly-Cookie (30 Tage)
 - Bilder liegen in der Datenbank (Tabelle `dateien`), werden im Browser verkleinert und unter `/api/datei/[id]` ausgeliefert
 - E-Mails über Resend; ohne `RESEND_API_KEY` werden sie nur im Admin unter „E-Mails“ protokolliert

@@ -14,7 +14,7 @@ export function sql(): postgres.Sql {
     g.__hpSql = postgres(DB_URL, {
       max: 3,
       idle_timeout: 20,
-      prepare: false, // nötig für den Supabase-Transaction-Pooler
+      prepare: false, // nötig für Verbindungs-Pooler (Neon/PgBouncer)
       ssl: lokal ? false : "require",
     });
   }
