@@ -1,7 +1,7 @@
 import "server-only";
 import postgres from "postgres";
 
-/** Verbindungs-URL: lokal DATABASE_URL, auf Vercel setzt die Supabase-Integration POSTGRES_URL. */
+/** Verbindungs-URL: DATABASE_URL (setzt die Neon-Integration auf Vercel automatisch), alternativ POSTGRES_URL. */
 export const DB_URL = process.env.DATABASE_URL || process.env.POSTGRES_URL || "";
 export const dbKonfiguriert = Boolean(DB_URL);
 
