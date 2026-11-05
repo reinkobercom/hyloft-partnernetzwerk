@@ -2,7 +2,8 @@ import "server-only";
 import { sql } from "./db";
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://partner.hyloft.de").replace(/\/$/, "");
-export const HYLOFT_INTERN = process.env.HYLOFT_INTERN_EMAIL || "info@hyloft.de";
+/** Interne Benachrichtigungen (Registrierungen, Anfragen, Partnerservice) – mehrere Adressen per Komma */
+export const HYLOFT_INTERN = process.env.HYLOFT_INTERN_EMAIL || "simon@reinkober.com,info@hyloft.de";
 const ABSENDER = process.env.MAIL_ABSENDER || "Hyloft Partnernetz <info@partner.hyloft.de>";
 const ANTWORT_AN = process.env.MAIL_ANTWORT_AN || "info@hyloft.de";
 
@@ -28,6 +29,7 @@ ${absaetze}${btn}
 
 /** Sendet eine Mail über Resend (falls konfiguriert) und protokolliert sie immer. Wirft nie. */
 export async function sendeMail(an: string, betreff: string, text: string, knopf?: { text: string; url: string }) {
+  const empfaenger = an.split(",").map((x) => x.trim()).filter(Boolean);
   const volltext = knopf ? `${text}\n\n${knopf.text}: ${knopf.url}` : text;
   let status: "gesendet" | "nicht_konfiguriert" | "fehler" = "nicht_konfiguriert";
   let fehler = "";
@@ -36,7 +38,7 @@ export async function sendeMail(an: string, betreff: string, text: string, knopf
       const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ from: ABSENDER, to: [an], reply_to: ANTWORT_AN, subject: betreff, text: volltext, html: html(text, knopf) }),
+        body: JSON.stringify({ from: ABSENDER, to: empfaenger, reply_to: ANTWORT_AN, subject: betreff, text: volltext, html: html(text, knopf) }),
       });
       if (res.ok) status = "gesendet";
       else {
@@ -49,7 +51,7 @@ export async function sendeMail(an: string, betreff: string, text: string, knopf
     }
   }
   try {
-    await sql()`insert into email_log (an, betreff, text, status, fehler) values (${an}, ${betreff}, ${volltext}, ${status}, ${fehler})`;
+    await sql()`insert into email_log (an, betreff, text, status, fehler) values (${empfaenger.join(", ")}, ${betreff}, ${volltext}, ${status}, ${fehler})`;
   } catch {}
   return status;
 }
