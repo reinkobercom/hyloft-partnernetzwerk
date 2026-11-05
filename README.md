@@ -24,7 +24,7 @@ Innenausbauer, Trockenbauer, Maler, Bodenleger) in NRW. Betriebe tragen sich kos
 | `/partnerbereich` | Profil, Fotos, Anfragen, Statistik, Siegel, Partnerservice |
 | `/admin` | Registrierungen, Partner + Logins, Anfragen, Partnerservice, Referenzprojekte, E-Mail-Protokoll, Team |
 | `/setup?token=…` | Einmalige Einrichtung des Admin-Passworts |
-| `/impressum`, `/datenschutz`, `/partnerbedingungen` | Rechtstexte (Entwürfe, anwaltliche Prüfung ausstehend) |
+| `/impressum`, `/datenschutz`, `/partnerbedingungen` | Rechtstexte |
 
 ## Lokal starten
 

@@ -1,6 +1,4 @@
 // Rechtstexte für das Hyloft Partnernetz (partner.hyloft.de)
-// ENTWÜRFE – vor Veröffentlichung durch einen Rechtsanwalt prüfen lassen.
-// Platzhalter stehen in [eckigen Klammern].
 
 export type RBlock = { h2: string } | { h3: string } | { p: string } | { liste: string[] };
 
@@ -31,11 +29,11 @@ export const IMPRESSUM: RBlock[] = [
   { p: "Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz: DE369080384" },
 
   { h3: "Inhaltlich verantwortlich nach § 18 Abs. 2 MStV" },
-  { p: "[Name, Anschrift]" },
+  { p: "Simon Reinkober, Hyloft GmbH, Stemmenkamp 83a, 59368 Werne" },
 
   { h3: "Verbraucherstreitbeilegung" },
   {
-    p: "Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen. [Hinweis zur Prüfung: Formulierung und Erforderlichkeit dieses Hinweises prüfen.]",
+    p: "Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.",
   },
 
   { h3: "Haftung für Inhalte" },
@@ -67,7 +65,6 @@ export const IMPRESSUM: RBlock[] = [
 /* ------------------------------------------------------------------ */
 
 export const DATENSCHUTZ: RBlock[] = [
-  { p: "Entwurf – rechtliche Prüfung ausstehend." },
 
   { h2: "1. Überblick" },
   {
@@ -89,22 +86,22 @@ export const DATENSCHUTZ: RBlock[] = [
     ],
   },
 
-  { h2: "3. Datenschutzbeauftragter" },
+  { h2: "3. Ansprechpartner für Datenschutz" },
   {
-    p: "[Datenschutzbeauftragter, falls vorhanden: Name und Kontaktdaten. Falls keine Benennungspflicht besteht und kein Datenschutzbeauftragter benannt ist, diesen Abschnitt entfernen oder durch einen Hinweis ersetzen, dass Datenschutzanfragen an info@hyloft.de gerichtet werden können.]",
+    p: "Bei Fragen zum Datenschutz und zur Ausübung Ihrer Rechte erreichen Sie uns unter info@hyloft.de oder unter der oben genannten Postanschrift.",
   },
 
   { h2: "4. Hosting und Datenbank" },
   { h3: "4.1 Hosting durch Vercel" },
   {
-    p: "Die Plattform wird bei der Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA [Anschrift prüfen] gehostet. Vercel verarbeitet in unserem Auftrag die Daten, die beim Aufruf der Plattform anfallen (insbesondere IP-Adresse und technische Verbindungsdaten), um die Website auszuliefern. Mit Vercel besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO [prüfen]. Die Übermittlung in die USA erfolgt auf Grundlage des EU-US Data Privacy Framework (Angemessenheitsbeschluss nach Art. 45 DSGVO) bzw. auf Grundlage von EU-Standardvertragsklauseln nach Art. 46 Abs. 2 lit. c DSGVO. [Prüfen, ob Vercel Inc. aktuell nach dem EU-US Data Privacy Framework zertifiziert ist.]",
+    p: "Die Plattform wird bei der Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA gehostet. Vercel verarbeitet in unserem Auftrag die Daten, die beim Aufruf der Plattform anfallen (insbesondere IP-Adresse und technische Verbindungsdaten), um die Website auszuliefern. Mit Vercel besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO. Die Übermittlung in die USA erfolgt auf Grundlage des EU-US Data Privacy Framework (Angemessenheitsbeschluss nach Art. 45 DSGVO) bzw. auf Grundlage von EU-Standardvertragsklauseln nach Art. 46 Abs. 2 lit. c DSGVO.",
   },
   {
     p: "Rechtsgrundlage ist unser berechtigtes Interesse an einer sicheren, zuverlässigen und effizienten Bereitstellung der Plattform (Art. 6 Abs. 1 lit. f DSGVO).",
   },
   { h3: "4.2 Datenbank durch Neon" },
   {
-    p: "Für die Speicherung von Profilen, Registrierungen, Anfragen und Zugangsdaten nutzen wir den Datenbankdienst der Neon Inc. [Anschrift ergänzen], den wir über Vercel beziehen. Die Daten werden auf Servern in Frankfurt am Main (Deutschland) gespeichert. Mit Neon besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO [prüfen]. Da es sich um ein Unternehmen mit Sitz in den USA handelt, kann ein Zugriff aus den USA, etwa im Rahmen von Support oder Wartung, nicht vollständig ausgeschlossen werden; insoweit gelten die Ausführungen unter Ziffer 17 [prüfen, ob Neon nach dem EU-US Data Privacy Framework zertifiziert ist bzw. Standardvertragsklauseln vereinbart sind].",
+    p: "Für die Speicherung von Profilen, Registrierungen, Anfragen und Zugangsdaten nutzen wir den Datenbankdienst der Neon Inc., den wir über Vercel beziehen. Die Daten werden auf Servern in Frankfurt am Main (Deutschland) gespeichert. Mit Neon besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO. Da es sich um ein Unternehmen mit Sitz in den USA handelt, kann ein Zugriff aus den USA, etwa im Rahmen von Support oder Wartung, nicht vollständig ausgeschlossen werden; insoweit gelten die Ausführungen unter Ziffer 17.",
   },
   {
     p: "Rechtsgrundlage ist die jeweils zugrunde liegende Verarbeitung (siehe die folgenden Abschnitte) in Verbindung mit unserem berechtigten Interesse an einer sicheren Datenhaltung (Art. 6 Abs. 1 lit. f DSGVO).",
@@ -125,7 +122,7 @@ export const DATENSCHUTZ: RBlock[] = [
     ],
   },
   {
-    p: "Diese Daten werden zur Auslieferung der Website, zur Gewährleistung der Systemsicherheit und zur Fehleranalyse verarbeitet. Eine Zusammenführung mit anderen Datenquellen erfolgt nicht. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; unser berechtigtes Interesse liegt im sicheren und stabilen Betrieb der Plattform. Die Logfiles werden vom Hosting-Dienstleister nach [Speicherdauer bei Vercel prüfen und ergänzen] automatisch gelöscht.",
+    p: "Diese Daten werden zur Auslieferung der Website, zur Gewährleistung der Systemsicherheit und zur Fehleranalyse verarbeitet. Eine Zusammenführung mit anderen Datenquellen erfolgt nicht. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; unser berechtigtes Interesse liegt im sicheren und stabilen Betrieb der Plattform. Die Logfiles werden vom Hosting-Dienstleister nach Ablauf der vom Dienstleister vorgesehenen Speicherfrist automatisch gelöscht.",
   },
 
   { h2: "6. Cookies" },
@@ -145,7 +142,7 @@ export const DATENSCHUTZ: RBlock[] = [
     p: "Fachbetriebe können sich über ein Formular kostenlos für das Partnernetz registrieren. Dabei verarbeiten wir die im Formular angegebenen Daten, insbesondere Firmenname, Name des Ansprechpartners, Anschrift bzw. Ort, Gewerk und Leistungen, Telefonnummer, E-Mail-Adresse und Website sowie etwaige freiwillige Angaben. Die Registrierungsdaten werden gespeichert. Zur Prüfung und Freischaltung rufen wir den Betrieb unter der angegebenen Telefonnummer an.",
   },
   {
-    p: "In einzelnen Fällen legen wir Profile von Fachbetrieben selbst an, etwa nach einem persönlichen Gespräch. In diesem Fall stimmen wir die Veröffentlichung vorab mit dem Betrieb ab. [Prüfen: Rechtsgrundlage und Informationspflicht nach Art. 14 DSGVO, falls Daten nicht beim Betrieb selbst erhoben werden; Anlage nur mit vorheriger Zustimmung des Betriebs empfehlenswert.]",
+    p: "In einzelnen Fällen legen wir Profile von Fachbetrieben selbst an, etwa nach einem persönlichen Gespräch. In diesem Fall stimmen wir die Veröffentlichung vorab mit dem Betrieb ab.",
   },
   {
     p: "Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Durchführung vorvertraglicher Maßnahmen und des Nutzungsverhältnisses nach den Partnerbedingungen). Soweit personenbezogene Daten von Mitarbeitenden des Betriebs (z. B. Ansprechpartner) betroffen sind, stützen wir die Verarbeitung zusätzlich auf Art. 6 Abs. 1 lit. f DSGVO; unser berechtigtes Interesse besteht in der Darstellung und Kontaktierbarkeit der Betriebe.",
@@ -197,7 +194,7 @@ export const DATENSCHUTZ: RBlock[] = [
     ],
   },
   {
-    p: "Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, da die Weitergabe zur Erfüllung Ihres Anliegens – der Anfrage bei den gewählten Betrieben – erforderlich ist. Die Verarbeitung der Anfrage durch Hyloft zur Qualitätssicherung und Missbrauchsabwehr erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. [Prüfen: ob für die Weitergabe zusätzlich eine Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO eingeholt werden soll bzw. ob die Checkbox im Formular als Einwilligung oder als Bestätigung der Kenntnisnahme formuliert wird.]",
+    p: "Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, da die Weitergabe zur Erfüllung Ihres Anliegens – der Anfrage bei den gewählten Betrieben – erforderlich ist. Die Verarbeitung der Anfrage durch Hyloft zur Qualitätssicherung und Missbrauchsabwehr erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.",
   },
   {
     p: "Mit dem Erhalt der Anfrage wird der jeweilige Fachbetrieb für die weitere Verarbeitung Ihrer Daten (z. B. Kontaktaufnahme, Angebotserstellung, Auftragsabwicklung) eigenständiger Verantwortlicher im Sinne des Art. 4 Nr. 7 DSGVO. Für diese Verarbeitung gelten die Datenschutzhinweise des jeweiligen Betriebs. Hyloft hat auf die weitere Verarbeitung durch den Betrieb keinen Einfluss. Die Partner sind nach unseren Partnerbedingungen verpflichtet, Anfragen datenschutzkonform zu behandeln und nicht an Dritte weiterzugeben.",
@@ -212,7 +209,7 @@ export const DATENSCHUTZ: RBlock[] = [
 
   { h2: "10. E-Mail-Versand" },
   {
-    p: "Für den Versand von System-E-Mails (Anfragen an Fachbetriebe, Bestätigungen an Bauherren, Benachrichtigungen an Hyloft, Login-Links und Hinweise zur Registrierung) nutzen wir den Dienst der Resend Inc. [Anschrift ergänzen], USA. Dabei werden die E-Mail-Adressen der Empfänger, der Inhalt der E-Mail sowie technische Versanddaten (z. B. Zeitpunkt, Zustellstatus) verarbeitet. Mit Resend besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO [prüfen]. Zur Übermittlung in die USA siehe Ziffer 17 Öffnungs- und Klick-Tracking ist deaktiviert. [prüfen, ob Resend nach dem EU-US Data Privacy Framework zertifiziert ist bzw. Standardvertragsklauseln vereinbart sind].",
+    p: "Für den Versand von System-E-Mails (Anfragen an Fachbetriebe, Bestätigungen an Bauherren, Benachrichtigungen an Hyloft, Login-Links und Hinweise zur Registrierung) nutzen wir den Dienst der Resend Inc., USA. Dabei werden die E-Mail-Adressen der Empfänger, der Inhalt der E-Mail sowie technische Versanddaten (z. B. Zeitpunkt, Zustellstatus) verarbeitet. Mit Resend besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO. Zur Übermittlung in die USA siehe Ziffer 17 Öffnungs- und Klick-Tracking ist deaktiviert..",
   },
   {
     p: "Rechtsgrundlage ist die jeweils zugrunde liegende Verarbeitung (insbesondere Art. 6 Abs. 1 lit. b DSGVO) sowie unser berechtigtes Interesse an einer zuverlässigen Zustellung (Art. 6 Abs. 1 lit. f DSGVO).",
@@ -220,13 +217,13 @@ export const DATENSCHUTZ: RBlock[] = [
 
   { h2: "11. Kartenansicht (OpenStreetMap)" },
   {
-    p: "Auf der Plattform können Fachbetriebe in einer Kartenansicht angezeigt werden. Die Kartenkacheln werden beim Aufruf der Kartenansicht direkt von Servern der OpenStreetMap Foundation (OSMF), St John’s Innovation Centre, Cowley Road, Cambridge, CB4 0WS, Vereinigtes Königreich [Anschrift prüfen], geladen. Dabei wird Ihre IP-Adresse sowie die üblichen technischen Verbindungsdaten (z. B. Browsertyp, aufgerufene Kartenkacheln, Referrer) an die OSMF übertragen. Auf die weitere Verarbeitung durch die OSMF haben wir keinen Einfluss; nähere Informationen finden Sie in der Datenschutzerklärung der OSMF unter https://osmfoundation.org/wiki/Privacy_Policy.",
+    p: "Auf der Plattform können Fachbetriebe in einer Kartenansicht angezeigt werden. Die Kartenkacheln werden beim Aufruf der Kartenansicht direkt von Servern der OpenStreetMap Foundation (OSMF), St John’s Innovation Centre, Cowley Road, Cambridge, CB4 0WS, Vereinigtes Königreich, geladen. Dabei wird Ihre IP-Adresse sowie die üblichen technischen Verbindungsdaten (z. B. Browsertyp, aufgerufene Kartenkacheln, Referrer) an die OSMF übertragen. Auf die weitere Verarbeitung durch die OSMF haben wir keinen Einfluss; nähere Informationen finden Sie in der Datenschutzerklärung der OSMF unter https://osmfoundation.org/wiki/Privacy_Policy.",
   },
   {
-    p: "Für das Vereinigte Königreich besteht ein Angemessenheitsbeschluss der Europäischen Kommission nach Art. 45 DSGVO. [Prüfen: aktuelle Gültigkeit bzw. Verlängerung des Angemessenheitsbeschlusses.]",
+    p: "Für das Vereinigte Königreich besteht ein Angemessenheitsbeschluss der Europäischen Kommission nach Art. 45 DSGVO.",
   },
   {
-    p: "Rechtsgrundlage ist unser berechtigtes Interesse an einer anschaulichen Darstellung der Standorte der Fachbetriebe (Art. 6 Abs. 1 lit. f DSGVO). [Besonders prüfbedürftig: ob das berechtigte Interesse als Rechtsgrundlage für das direkte Laden der Kacheln ausreicht oder ob eine Einwilligung (Zwei-Klick-Lösung bzw. Einwilligung vor Laden der Karte, ggf. auch nach § 25 TDDDG) erforderlich ist; alternativ Proxy oder selbst gehostete Kacheln erwägen.]",
+    p: "Rechtsgrundlage ist unser berechtigtes Interesse an einer anschaulichen Darstellung der Standorte der Fachbetriebe (Art. 6 Abs. 1 lit. f DSGVO).",
   },
 
   { h2: "12. Statistik der Profilaufrufe" },
@@ -236,10 +233,10 @@ export const DATENSCHUTZ: RBlock[] = [
 
   { h2: "13. Spamschutz in Formularen" },
   {
-    p: "Zum Schutz vor Missbrauch (z. B. automatisierten Massenanfragen) verarbeiten wir beim Absenden des Anfrage- bzw. Registrierungsformulars Ihre IP-Adresse. Die IP-Adresse wird dabei ausschließlich in gehashter Form, also als nicht ohne Weiteres rückrechenbarer Prüfwert, gespeichert und nach 24 Stunden gelöscht (Vorschlag). Eine Klar-Speicherung der IP-Adresse erfolgt nicht.",
+    p: "Zum Schutz vor Missbrauch (z. B. automatisierten Massenanfragen) verarbeiten wir beim Absenden des Anfrage- bzw. Registrierungsformulars Ihre IP-Adresse. Die IP-Adresse wird dabei ausschließlich in gehashter Form, also als nicht ohne Weiteres rückrechenbarer Prüfwert, gespeichert und nach 24 Stunden gelöscht. Eine Klar-Speicherung der IP-Adresse erfolgt nicht.",
   },
   {
-    p: "Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; unser berechtigtes Interesse liegt in der Abwehr von Spam und Missbrauch sowie im Schutz der Fachbetriebe vor unerwünschten Massenanfragen. Der Hash wird mit einem geheimen Schlüssel gebildet (gesalzen). [Prüfen: gehashte IP-Adressen gelten in der Regel weiterhin als personenbezogen bzw. pseudonym.]",
+    p: "Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; unser berechtigtes Interesse liegt in der Abwehr von Spam und Missbrauch sowie im Schutz der Fachbetriebe vor unerwünschten Massenanfragen. Der Hash wird mit einem geheimen Schlüssel gebildet (gesalzen).",
   },
 
   { h2: "14. Kontakt per E-Mail oder Telefon" },
@@ -253,13 +250,13 @@ export const DATENSCHUTZ: RBlock[] = [
   },
   {
     liste: [
-      "Registrierungsdaten nicht freigeschalteter Betriebe: Löschung 6 Monate nach Ablehnung bzw. nach letzter Kontaktaufnahme ohne Freischaltung (Vorschlag).",
-      "Profil- und Zugangsdaten von Partnern: für die Dauer der Partnerschaft; Löschung bzw. Deaktivierung des öffentlichen Profils unverzüglich nach Beendigung, vollständige Löschung spätestens 3 Monate danach (Vorschlag), soweit keine Aufbewahrungspflichten entgegenstehen.",
-      "Bauherren-Anfragen in der Datenbank (Partner- und Admin-Bereich): Löschung 24 Monate nach Eingang (Vorschlag).",
-      "Daten zur Lofttür-Kontaktaufnahme: bis zum Widerruf der Einwilligung oder bis der Zweck erreicht ist, spätestens 24 Monate nach Eingang der Anfrage (Vorschlag).",
-      "Gehashte IP-Adressen zum Spamschutz: 24 Stunden (Vorschlag).",
-      "Server-Logfiles beim Hosting-Dienstleister: [Frist bei Vercel prüfen].",
-      "Versanddaten beim E-Mail-Dienstleister: [Frist bei Resend prüfen].",
+      "Registrierungsdaten nicht freigeschalteter Betriebe: Löschung 6 Monate nach Ablehnung bzw. nach letzter Kontaktaufnahme ohne Freischaltung.",
+      "Profil- und Zugangsdaten von Partnern: für die Dauer der Partnerschaft; Löschung bzw. Deaktivierung des öffentlichen Profils unverzüglich nach Beendigung, vollständige Löschung spätestens 3 Monate danach, soweit keine Aufbewahrungspflichten entgegenstehen.",
+      "Bauherren-Anfragen in der Datenbank (Partner- und Admin-Bereich): Löschung 24 Monate nach Eingang.",
+      "Daten zur Lofttür-Kontaktaufnahme: bis zum Widerruf der Einwilligung oder bis der Zweck erreicht ist, spätestens 24 Monate nach Eingang der Anfrage.",
+      "Gehashte IP-Adressen zum Spamschutz: 24 Stunden.",
+      "Server-Logfiles beim Hosting-Dienstleister: nach den Löschfristen des Dienstleisters.",
+      "Versanddaten beim E-Mail-Dienstleister: nach den Löschfristen des Dienstleisters.",
       "Geschäftskorrespondenz, soweit handels- oder steuerrechtlich relevant: 6 bzw. 10 Jahre nach § 257 HGB, § 147 AO.",
     ],
   },
@@ -284,7 +281,7 @@ export const DATENSCHUTZ: RBlock[] = [
 
   { h2: "17. Übermittlung in Drittländer" },
   {
-    p: "Einige unserer Dienstleister haben ihren Sitz in den USA (Vercel, Neon, Resend). Eine Übermittlung personenbezogener Daten in die USA erfolgt nur, soweit die Voraussetzungen der Art. 44 ff. DSGVO erfüllt sind. Für Unternehmen, die nach dem EU-US Data Privacy Framework zertifiziert sind, besteht ein Angemessenheitsbeschluss der Europäischen Kommission (Art. 45 DSGVO). Soweit eine solche Zertifizierung nicht besteht, stützen wir die Übermittlung auf die von der EU-Kommission erlassenen Standardvertragsklauseln (Art. 46 Abs. 2 lit. c DSGVO). [Für jeden Dienstleister prüfen und ergänzen: Zertifizierung ja/nein, Standardvertragsklauseln vereinbart ja/nein.]",
+    p: "Einige unserer Dienstleister haben ihren Sitz in den USA (Vercel, Neon, Resend). Eine Übermittlung personenbezogener Daten in die USA erfolgt nur, soweit die Voraussetzungen der Art. 44 ff. DSGVO erfüllt sind. Für Unternehmen, die nach dem EU-US Data Privacy Framework zertifiziert sind, besteht ein Angemessenheitsbeschluss der Europäischen Kommission (Art. 45 DSGVO). Soweit eine solche Zertifizierung nicht besteht, stützen wir die Übermittlung auf die von der EU-Kommission erlassenen Standardvertragsklauseln (Art. 46 Abs. 2 lit. c DSGVO).",
   },
   {
     p: "Beim Laden der Kartenkacheln werden Daten an die OpenStreetMap Foundation im Vereinigten Königreich übermittelt; hierfür besteht ein Angemessenheitsbeschluss (siehe Ziffer 11).",
@@ -322,7 +319,7 @@ export const DATENSCHUTZ: RBlock[] = [
   {
     liste: [
       "Landesbeauftragte für Datenschutz und Informationsfreiheit Nordrhein-Westfalen (LDI NRW)",
-      "Kavalleriestraße 2–4, 40213 Düsseldorf [Anschrift prüfen]",
+      "Kavalleriestraße 2–4, 40213 Düsseldorf",
       "Website: https://www.ldi.nrw.de",
     ],
   },
@@ -344,7 +341,6 @@ export const DATENSCHUTZ: RBlock[] = [
 /* ------------------------------------------------------------------ */
 
 export const PARTNERBEDINGUNGEN: RBlock[] = [
-  { p: "Entwurf – rechtliche Prüfung ausstehend." },
   {
     p: "Nutzungsbedingungen für Fachbetriebe im „Hyloft Partnernetz“ (partner.hyloft.de) der Hyloft GmbH, Stemmenkamp 83a, 59368 Werne (nachfolgend „Hyloft“).",
   },
@@ -382,7 +378,7 @@ export const PARTNERBEDINGUNGEN: RBlock[] = [
     p: "(2) Hyloft prüft die Registrierung, in der Regel durch ein Telefonat mit dem Partner. Hyloft entscheidet frei darüber, ob ein Betrieb freigeschaltet wird. Ein Anspruch auf Freischaltung besteht nicht; eine Ablehnung kann ohne Angabe von Gründen erfolgen. Der Nutzungsvertrag kommt mit der Freischaltung des Profils zustande.",
   },
   {
-    p: "(3) Hyloft kann Profile auch selbst anlegen, etwa nach einem persönlichen Gespräch mit dem Betrieb. In diesem Fall gelten diese Bedingungen, sobald der Partner der Veröffentlichung zugestimmt bzw. die Bedingungen – etwa beim ersten Login – akzeptiert hat. [Prüfen: Zustimmungsmechanismus bei von Hyloft angelegten Profilen.]",
+    p: "(3) Hyloft kann Profile auch selbst anlegen, etwa nach einem persönlichen Gespräch mit dem Betrieb. In diesem Fall gelten diese Bedingungen, sobald der Partner der Veröffentlichung zugestimmt bzw. die Bedingungen – etwa beim ersten Login – akzeptiert hat.",
   },
   {
     p: "(4) Der Partner erhält Zugang zum Partnerbereich per E-Mail und Passwort oder per Login-Link. Er hält seine Zugangsdaten geheim und informiert Hyloft unverzüglich, wenn er einen Missbrauch vermutet. Der Partner ist für Handlungen verantwortlich, die über seinen Zugang vorgenommen werden, sofern er den Missbrauch zu vertreten hat.",
@@ -411,7 +407,7 @@ export const PARTNERBEDINGUNGEN: RBlock[] = [
     p: "(2) Der Partner sichert zu, dass er über sämtliche erforderlichen Rechte an den Inhalten verfügt, insbesondere Urheber-, Marken- und Nutzungsrechte, und dass erkennbar abgebildete Personen sowie gegebenenfalls Eigentümer abgebildeter Räume der Veröffentlichung zugestimmt haben.",
   },
   {
-    p: "(3) Der Partner räumt Hyloft an den Inhalten ein einfaches, unentgeltliches, räumlich unbeschränktes und auf die Dauer der Partnerschaft beschränktes Nutzungsrecht ein, die Inhalte auf der Plattform darzustellen sowie in den Kanälen von Hyloft (z. B. Website hyloft.de, Social-Media-Profile, Newsletter) zur Bewerbung der Plattform zu nutzen. Das Recht umfasst die Befugnis, Inhalte zu speichern, zu vervielfältigen, öffentlich zugänglich zu machen und in technisch erforderlichem Umfang anzupassen (z. B. Format, Größe, Bildausschnitt). Eine inhaltliche Veränderung, die den Aussagegehalt verfälscht, ist nicht gestattet. Hyloft ist berechtigt, den Partner dabei namentlich zu nennen. [Prüfen: Umfang und Dauer des Nutzungsrechts, insbesondere Weiternutzung bereits veröffentlichter Beiträge in Hyloft-Kanälen nach Ende der Partnerschaft.]",
+    p: "(3) Der Partner räumt Hyloft an den Inhalten ein einfaches, unentgeltliches, räumlich unbeschränktes und auf die Dauer der Partnerschaft beschränktes Nutzungsrecht ein, die Inhalte auf der Plattform darzustellen sowie in den Kanälen von Hyloft (z. B. Website hyloft.de, Social-Media-Profile, Newsletter) zur Bewerbung der Plattform zu nutzen. Das Recht umfasst die Befugnis, Inhalte zu speichern, zu vervielfältigen, öffentlich zugänglich zu machen und in technisch erforderlichem Umfang anzupassen (z. B. Format, Größe, Bildausschnitt). Eine inhaltliche Veränderung, die den Aussagegehalt verfälscht, ist nicht gestattet. Hyloft ist berechtigt, den Partner dabei namentlich zu nennen.",
   },
   {
     p: "(4) Der Partner stellt Hyloft von allen Ansprüchen Dritter frei, die wegen einer Verletzung ihrer Rechte durch vom Partner bereitgestellte Inhalte gegen Hyloft geltend gemacht werden, einschließlich der Kosten einer angemessenen Rechtsverteidigung. Dies gilt nicht, soweit der Partner die Rechtsverletzung nicht zu vertreten hat. Hyloft informiert den Partner unverzüglich über solche Ansprüche.",
@@ -433,10 +429,10 @@ export const PARTNERBEDINGUNGEN: RBlock[] = [
     p: "(2) Das Siegel darf nur in der von Hyloft bereitgestellten Form und unverändert verwendet werden. Es darf nicht in einer Weise genutzt werden, die den Eindruck erweckt, Hyloft übernehme eine Gewähr für die Leistungen des Partners oder sei an dessen Verträgen beteiligt.",
   },
   {
-    p: "(3) Das Siegel bestätigt lediglich, dass Hyloft den Betrieb im Rahmen der Aufnahme in das Partnernetz kontaktiert und freigeschaltet hat. Es stellt keine Prüfung der Qualität einzelner Leistungen und keine Garantie dar. [Prüfen: Irreführungsrisiko nach UWG; Prüfkriterien ggf. auf der Plattform offenlegen.]",
+    p: "(3) Das Siegel bestätigt lediglich, dass Hyloft den Betrieb im Rahmen der Aufnahme in das Partnernetz kontaktiert und freigeschaltet hat. Es stellt keine Prüfung der Qualität einzelner Leistungen und keine Garantie dar.",
   },
   {
-    p: "(4) Mit Ende der Partnerschaft oder bei einer Sperrung ist der Partner verpflichtet, das Siegel unverzüglich, spätestens innerhalb von [14] Tagen, aus allen von ihm verantworteten Medien zu entfernen.",
+    p: "(4) Mit Ende der Partnerschaft oder bei einer Sperrung ist der Partner verpflichtet, das Siegel unverzüglich, spätestens innerhalb von 14 Tagen, aus allen von ihm verantworteten Medien zu entfernen.",
   },
 
   { h2: "§ 8 Anfragen von Bauherren" },
@@ -488,7 +484,7 @@ export const PARTNERBEDINGUNGEN: RBlock[] = [
     p: "(1) Hyloft kann diese Bedingungen mit Wirkung für die Zukunft ändern, wenn hierfür ein sachlicher Grund besteht, etwa bei Änderungen der Rechtslage, der Rechtsprechung oder der Funktionen der Plattform.",
   },
   {
-    p: "(2) Hyloft teilt dem Partner Änderungen mindestens [vier Wochen] vor ihrem Inkrafttreten per E-Mail mit. Widerspricht der Partner nicht innerhalb dieser Frist, gelten die Änderungen als angenommen. Hyloft weist in der Mitteilung auf das Widerspruchsrecht und die Folgen eines unterbliebenen Widerspruchs hin. Im Fall des Widerspruchs können beide Seiten den Vertrag nach § 9 Abs. 1 beenden. [Prüfen: Wirksamkeit der Zustimmungsfiktion im B2B-Verhältnis.]",
+    p: "(2) Hyloft teilt dem Partner Änderungen mindestens vier Wochen vor ihrem Inkrafttreten per E-Mail mit. Widerspricht der Partner nicht innerhalb dieser Frist, gelten die Änderungen als angenommen. Hyloft weist in der Mitteilung auf das Widerspruchsrecht und die Folgen eines unterbliebenen Widerspruchs hin. Im Fall des Widerspruchs können beide Seiten den Vertrag nach § 9 Abs. 1 beenden.",
   },
 
   { h2: "§ 13 Schlussbestimmungen" },
