@@ -3,41 +3,50 @@ import { notFound } from "next/navigation";
 import { Header, Footer } from "@/components/Chrome";
 import PartnerCard from "@/components/PartnerCard";
 import BlogCard from "@/components/BlogCard";
-import { GEWERKE, GEWERK_SEO, ORTE, PARTNER, distanceKm, gewerkBySeo, ortByName, ortBySlug, ortSlug, suche, type Treffer } from "@/lib/data";
+import { GEWERKE, GEWERK_SEO, ORTE, distanceKm, gewerkBySeo, ortBySlug, ortSlug, suche, type Partner, type Treffer } from "@/lib/data";
+import { livePartner } from "@/lib/repo";
 import { ARTIKEL_ZU_GEWERK, SEO_TEXTE } from "@/lib/seo";
 import { artikelBySlug } from "@/lib/blog";
 
-export const dynamicParams = false;
+export const revalidate = 300;
 
-export function generateStaticParams() {
-  return GEWERKE.flatMap((g) => ORTE.map((o) => ({ gewerk: GEWERK_SEO[g.slug].slug, stadt: ortSlug(o.name) })));
+async function daten(gewerk: string, stadt: string) {
+  const g = gewerkBySeo(gewerk);
+  const o = ortBySlug(stadt);
+  if (!g || !o) return null;
+  const partner = await livePartner();
+  const { treffer } = suche(partner, g.name, o.name);
+  return { g, o, partner, treffer };
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ gewerk: string; stadt: string }> }) {
   const { gewerk, stadt } = await params;
-  const g = gewerkBySeo(gewerk);
-  const o = ortBySlug(stadt);
-  if (!g || !o) return {};
+  const d = await daten(gewerk, stadt);
+  if (!d) return {};
+  const { g, o, treffer } = d;
   return {
     title: `${g.plural} in ${o.name} – geprüfte Betriebe | Hyloft Partnernetz`,
     description: `${g.plural} in ${o.name} und Umgebung finden: persönlich geprüfte Fachbetriebe im Hyloft Partnernetz. Kostenlos und unverbindlich anfragen.`,
+    alternates: { canonical: `/${gewerk}/${stadt}` },
+    // Seiten ohne Betrieb erst indexieren, wenn dort ein Partner eingetragen ist
+    robots: treffer.length > 0 ? undefined : { index: false, follow: true },
   };
 }
 
 export default async function SeoSeite({ params }: { params: Promise<{ gewerk: string; stadt: string }> }) {
   const { gewerk, stadt } = await params;
-  const g = gewerkBySeo(gewerk);
-  const o = ortBySlug(stadt);
-  if (!g || !o) notFound();
+  const d = await daten(gewerk, stadt);
+  if (!d) notFound();
+  const { g, o, partner, treffer } = d;
 
   const text = SEO_TEXTE[g.slug];
-  const { treffer } = suche(g.name, o.name);
   // Fallback: nächstgelegene Betriebe des Gewerks in NRW
   const umgebung: Treffer[] =
     treffer.length > 0
       ? []
-      : PARTNER.filter((p) => p.gewerk === g.slug)
-          .map((p) => ({ ...p, distanz: distanceKm(o, ortByName(p.ort)!) }))
+      : partner
+          .filter((p: Partner) => p.gewerk === g.slug)
+          .map((p) => ({ ...p, distanz: distanceKm(o, p) }))
           .sort((a, b) => a.distanz! - b.distanz!)
           .slice(0, 3);
 
@@ -57,7 +66,7 @@ export default async function SeoSeite({ params }: { params: Promise<{ gewerk: s
   return (
     <>
       <Header />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }} />
       <main className="mx-auto max-w-6xl px-4 sm:px-6">
         <nav className="pt-8 text-sm text-muted">
           <Link href="/regionen" className="hover:text-ink">Regionen</Link>

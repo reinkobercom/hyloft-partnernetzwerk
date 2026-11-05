@@ -2,12 +2,14 @@ import Link from "next/link";
 import { Header, Footer } from "@/components/Chrome";
 import SearchBar from "@/components/SearchBar";
 import PartnerCard from "@/components/PartnerCard";
-import { GEWERKE, PARTNER } from "@/lib/data";
+import { GEWERKE } from "@/lib/data";
+import { livePartner } from "@/lib/repo";
 import BlogCard from "@/components/BlogCard";
 import { ARTIKEL } from "@/lib/blog";
 
 const GEWERK_ICONS: Record<string, React.ReactNode> = {
   innenarchitektur: <path d="M4 20h16M6 20V9l6-5 6 5v11M10 20v-5h4v5" />,
+  architektur: <path d="M3 21h18M5 21V10l7-6 7 6v11M9 21v-6h6v6M3 10l9-7 9 7" />,
   tischlerei: <path d="M3 17l8-8m-3-3 3 3 7-7 3 3-7 7 3 3-5 5-3-3-4 4H3v-2Z" />,
   innenausbau: <path d="M4 4h16v16H4zM4 10h16M10 10v10" />,
   trockenbau: <path d="M4 20V4h6v16M14 20V8h6v12M4 12h6M14 14h6" />,
@@ -15,8 +17,12 @@ const GEWERK_ICONS: Record<string, React.ReactNode> = {
   boden: <path d="M3 21 21 3M3 15l6 6M3 9l12 12M9 3l12 12M15 3l6 6" />,
 };
 
-export default function Home() {
-  const featured = PARTNER.filter((p) => p.verifiziert).slice(0, 4);
+export const revalidate = 60;
+
+export default async function Home() {
+  const alle = await livePartner();
+  // Betriebe mit Fotos zuerst zeigen
+  const featured = [...alle].sort((a, b) => b.bilder.length - a.bilder.length).slice(0, 4);
 
   return (
     <>
@@ -41,7 +47,7 @@ export default function Home() {
             <SearchBar big />
           </div>
           <div className="rise rise-4 mt-6 flex flex-wrap justify-center gap-2">
-            {GEWERKE.slice(0, 4).map((g) => (
+            {GEWERKE.filter((g) => ["innenarchitektur", "architektur", "tischlerei", "innenausbau"].includes(g.slug)).map((g) => (
               <Link
                 key={g.slug}
                 href={`/suche?was=${encodeURIComponent(g.name)}`}
@@ -86,7 +92,7 @@ export default function Home() {
               Alle Partner ansehen →
             </Link>
           </div>
-          <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+          <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
             {GEWERKE.map((g) => (
               <Link
                 key={g.slug}
@@ -104,6 +110,16 @@ export default function Home() {
                 </span>
               </Link>
             ))}
+            <Link
+              href="/anfrage"
+              className="flex flex-col justify-between gap-6 rounded-3xl bg-forest p-5 text-white transition hover:bg-forest-soft sm:p-7"
+            >
+              <span className="text-2xl leading-none text-mint">→</span>
+              <span>
+                <span className="block font-semibold sm:text-lg">Mehrere Gewerke?</span>
+                <span className="mt-1 block text-xs leading-relaxed text-white/70 sm:text-sm">Eine Anfrage an bis zu drei Betriebe</span>
+              </span>
+            </Link>
           </div>
         </section>
 
@@ -133,12 +149,34 @@ export default function Home() {
         {/* PARTNER */}
         <section className="mx-auto max-w-6xl px-4 pt-24 sm:px-6">
           <p className="eyebrow text-muted">Partner im Netzwerk</p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Geprüfte Betriebe aus Ihrer Region</h2>
-          <div className="mt-10 grid gap-5 lg:grid-cols-2">
-            {featured.map((p) => (
-              <PartnerCard key={p.slug} p={p} />
-            ))}
-          </div>
+          <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Geprüfte Betriebe aus NRW</h2>
+          {featured.length > 0 ? (
+            <>
+              <div className="mt-10 grid gap-5 lg:grid-cols-2">
+                {featured.map((p) => (
+                  <PartnerCard key={p.slug} p={p} />
+                ))}
+              </div>
+              {alle.length > featured.length && (
+                <Link href="/suche" className="mt-8 inline-block text-sm font-semibold text-forest hover:underline">
+                  Alle {alle.length} Betriebe ansehen →
+                </Link>
+              )}
+            </>
+          ) : (
+            <div className="mt-10 grid gap-6 rounded-[2rem] border border-dashed border-line bg-white p-8 sm:p-10 lg:grid-cols-[1.4fr_1fr] lg:items-center">
+              <div>
+                <p className="text-xl font-semibold">Das Partnernetz ist im Aufbau.</p>
+                <p className="mt-2 leading-relaxed text-muted">
+                  Wir prüfen gerade die ersten Fachbetriebe aus Münsterland und Ruhrgebiet. Sie planen schon jetzt? Beschreiben Sie Ihr Projekt – wir empfehlen Ihnen persönlich einen passenden Betrieb.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3 lg:justify-end">
+                <Link href="/anfrage" className="rounded-full bg-forest px-6 py-3 text-sm font-semibold text-white hover:bg-forest-soft">Projekt beschreiben</Link>
+                <Link href="/fuer-partner" className="rounded-full border border-forest/20 px-6 py-3 text-sm font-semibold text-forest hover:bg-mint">Als Betrieb eintragen</Link>
+              </div>
+            </div>
+          )}
         </section>
 
         {/* HYLOFT */}
@@ -159,10 +197,10 @@ export default function Home() {
                 unserem Netzwerk.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <a href="https://www.hyloft.de" className="rounded-full bg-forest px-6 py-3 text-sm font-semibold text-white hover:bg-forest-soft">
+                <a href="https://www.hyloft.de" target="_blank" rel="noopener" className="rounded-full bg-forest px-6 py-3 text-sm font-semibold text-white hover:bg-forest-soft">
                   Lofttür konfigurieren
                 </a>
-                <a href="https://www.hyloft.de" className="rounded-full border border-forest/20 px-6 py-3 text-sm font-semibold text-forest hover:bg-mint">
+                <a href="https://www.hyloft.de" target="_blank" rel="noopener" className="rounded-full border border-forest/20 px-6 py-3 text-sm font-semibold text-forest hover:bg-mint">
                   Showroom Lüdinghausen
                 </a>
               </div>

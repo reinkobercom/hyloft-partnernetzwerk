@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { Header, Footer } from "@/components/Chrome";
-import { GEWERKE, GEWERK_SEO, ORTE, ortSlug } from "@/lib/data";
+import { GEWERKE, GEWERK_SEO, ORTE } from "@/lib/data";
 
-export const metadata = { title: "Fachbetriebe nach Region – Hyloft Partnernetz" };
+export const metadata = {
+  title: "Fachbetriebe nach Stadt in NRW – Hyloft Partnernetz",
+  description: "Innenarchitekten, Architekten, Tischler, Innenausbauer, Trockenbauer, Maler und Bodenleger in über 200 Städten in Nordrhein-Westfalen.",
+};
 
 export default function Regionen() {
   const orte = [...ORTE].sort((a, b) => a.name.localeCompare(b.name, "de"));
@@ -15,20 +18,21 @@ export default function Regionen() {
           <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Fachbetriebe in NRW</h1>
           <p className="mt-4 max-w-2xl text-muted">Wählen Sie Gewerk und Stadt – Sie sehen geprüfte Betriebe aus dem Hyloft Partnernetz in Ihrer Nähe.</p>
         </section>
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {GEWERKE.map((g) => (
-            <section key={g.slug} className="rounded-3xl border border-line bg-white p-6">
-              <h2 className="text-lg font-semibold">{g.plural}</h2>
-              <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
+        <div className="mt-12 grid gap-4">
+          {GEWERKE.map((g, i) => (
+            <details key={g.slug} open={i === 0} className="group rounded-3xl border border-line bg-white p-6">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+                <h2 className="text-lg font-semibold">{g.plural} in NRW</h2>
+                <span className="text-xl text-forest transition group-open:rotate-45">+</span>
+              </summary>
+              <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm sm:grid-cols-3 lg:grid-cols-5">
                 {orte.map((o) => (
-                  <li key={o.name}>
-                    <Link href={`/${GEWERK_SEO[g.slug].slug}/${ortSlug(o.name)}`} className="text-muted hover:text-forest">
-                      {o.name}
-                    </Link>
+                  <li key={o.slug}>
+                    <Link href={`/${GEWERK_SEO[g.slug].slug}/${o.slug}`} className="text-muted hover:text-forest">{o.name}</Link>
                   </li>
                 ))}
               </ul>
-            </section>
+            </details>
           ))}
         </div>
       </main>

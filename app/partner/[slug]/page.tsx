@@ -3,81 +3,108 @@ import { notFound } from "next/navigation";
 import { Header, Footer } from "@/components/Chrome";
 import { Avatar, Badge, Check } from "@/components/PartnerCard";
 import ContactForm from "@/components/ContactForm";
-import { PARTNER, gewerkBySlug, partnerBySlug, referenzenFuer } from "@/lib/data";
+import Aufruf from "@/components/Aufruf";
+import { GEWERK_SEO, gewerkBySlug, ortSlug, resolveOrt } from "@/lib/data";
+import { livePartner, livePartnerBySlug, referenzenFuer } from "@/lib/repo";
 
-export function generateStaticParams() {
-  return PARTNER.map((p) => ({ slug: p.slug }));
-}
+export const revalidate = 120;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const p = partnerBySlug(slug);
-  const g = p && gewerkBySlug(p.gewerk);
-  return { title: p ? `${p.firma} – ${g?.name} in ${p.ort} | Hyloft Partnernetz` : "Partner" };
+  const p = await livePartnerBySlug(slug);
+  if (!p) return { title: "Betrieb nicht gefunden – Hyloft Partnernetz" };
+  const g = gewerkBySlug(p.gewerk);
+  return {
+    title: `${p.firma} – ${g?.name} in ${p.ort} | Hyloft Partnernetz`,
+    description: (p.claim || p.beschreibung || `${g?.name} in ${p.ort}, geprüft vom Hyloft-Team.`).slice(0, 160),
+    alternates: { canonical: `/partner/${p.slug}` },
+    openGraph: p.bilder[0] ? { images: [p.bilder[0]] } : undefined,
+  };
 }
 
 export default async function PartnerPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const p = partnerBySlug(slug);
+  const p = await livePartnerBySlug(slug);
   if (!p) notFound();
   const g = gewerkBySlug(p.gewerk);
-  const refs = referenzenFuer(p.slug);
-  const aehnliche = PARTNER.filter((x) => x.gewerk === p.gewerk && x.slug !== p.slug).slice(0, 2);
+  const [refs, alle] = await Promise.all([referenzenFuer(p.id), livePartner()]);
+  const aehnliche = alle.filter((x) => x.gewerk === p.gewerk && x.slug !== p.slug).slice(0, 2);
+  const stadt = resolveOrt(p.plz || p.ort);
+  const web = p.website ? (p.website.startsWith("http") ? p.website : `https://${p.website}`) : "";
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: p.firma,
+    description: p.beschreibung || p.claim || undefined,
+    address: { "@type": "PostalAddress", postalCode: p.plz || undefined, addressLocality: p.ort, addressCountry: "DE" },
+    geo: { "@type": "GeoCoordinates", latitude: p.lat, longitude: p.lng },
+    telephone: p.telefon || undefined,
+    url: web || undefined,
+    image: p.bilder[0] || undefined,
+  };
 
   return (
     <>
       <Header />
+      <Aufruf slug={p.slug} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <main className="mx-auto max-w-6xl px-4 sm:px-6">
         <nav className="pt-8 text-sm text-muted">
           <Link href="/suche" className="hover:text-ink">Partner finden</Link>
           <span className="mx-2">/</span>
-          <Link href={`/suche?was=${encodeURIComponent(g?.name ?? "")}`} className="hover:text-ink">{g?.plural}</Link>
+          {stadt ? (
+            <Link href={`/${GEWERK_SEO[p.gewerk]?.slug}/${ortSlug(stadt.name)}`} className="hover:text-ink">{g?.plural} in {stadt.name}</Link>
+          ) : (
+            <Link href={`/suche?was=${encodeURIComponent(g?.name ?? "")}`} className="hover:text-ink">{g?.plural}</Link>
+          )}
           <span className="mx-2">/</span>
           <span className="text-ink">{p.firma}</span>
         </nav>
 
-        {/* Galerie */}
-        <div className="mt-6 grid h-[260px] grid-cols-3 gap-2 overflow-hidden rounded-[2rem] sm:h-[420px] sm:grid-cols-4 sm:grid-rows-2">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={p.bilder[0]} alt="" className="col-span-2 h-full w-full object-cover sm:row-span-2" />
-          {p.bilder.slice(1).map((b, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img key={b} src={b} alt="" className={`h-full w-full object-cover ${i === 0 ? "sm:col-span-2" : "hidden sm:col-span-2 sm:block"}`} />
-          ))}
-        </div>
-        <p className="mt-2 text-xs text-muted">Beispielbilder</p>
+        {p.bilder.length > 0 && (
+          <div className={`mt-6 grid gap-2 overflow-hidden rounded-[2rem] ${p.bilder.length >= 3 ? "h-[260px] grid-cols-3 sm:h-[420px] sm:grid-cols-4 sm:grid-rows-2" : "h-[260px] grid-cols-2 sm:h-[380px]"}`}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={p.bilder[0]} alt={`Projekt von ${p.firma}`} className={`h-full w-full object-cover ${p.bilder.length >= 3 ? "col-span-2 sm:row-span-2" : p.bilder.length === 1 ? "col-span-2" : ""}`} />
+            {p.bilder.slice(1, 3).map((b, i) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img key={b} src={b} alt={`Projekt von ${p.firma}`} className={`h-full w-full object-cover ${p.bilder.length >= 3 ? (i === 0 ? "sm:col-span-2" : "hidden sm:col-span-2 sm:block") : ""}`} />
+            ))}
+          </div>
+        )}
 
         <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_380px]">
           <div>
             <div className="flex items-start gap-5">
-              <Avatar firma={p.firma} size="lg" />
+              <Avatar firma={p.firma} logo={p.logo} size="lg" />
               <div>
                 <p className="eyebrow text-muted">{g?.name}</p>
                 <h1 className="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">{p.firma}</h1>
-                <p className="mt-1 text-muted">{p.ort} · Einsatzgebiet ca. {p.radiusKm} km</p>
+                <p className="mt-1 text-muted">{p.plz} {p.ort} · Einsatzgebiet ca. {p.radiusKm} km</p>
               </div>
             </div>
             <div className="mt-5 flex flex-wrap gap-2">
               {p.verifiziert && <Badge>{Check} Von Hyloft geprüft</Badge>}
               {p.lofttuerErfahrung && <Badge tone="stone">Erfahrung mit Lofttüren</Badge>}
-              <Badge tone="stone">Beispielprofil</Badge>
             </div>
 
-            <p className="mt-8 text-xl font-medium leading-snug text-forest">{p.claim}</p>
-            <p className="mt-4 leading-relaxed text-ink/80">{p.beschreibung}</p>
+            {p.claim && <p className="mt-8 text-xl font-medium leading-snug text-forest">{p.claim}</p>}
+            {p.beschreibung && <p className="mt-4 whitespace-pre-line leading-relaxed text-ink/80">{p.beschreibung}</p>}
 
-            <h2 className="mt-10 text-lg font-semibold">Leistungen</h2>
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {p.leistungen.map((l) => (
-                <li key={l} className="rounded-full border border-line bg-white px-4 py-2 text-sm">{l}</li>
-              ))}
-            </ul>
+            {p.leistungen.length > 0 && (
+              <>
+                <h2 className="mt-10 text-lg font-semibold">Leistungen</h2>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {p.leistungen.map((l) => <li key={l} className="rounded-full border border-line bg-white px-4 py-2 text-sm">{l}</li>)}
+                </ul>
+              </>
+            )}
 
             <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-4">
               {[
-                ["Gegründet", String(p.seit)],
-                ["Mitarbeitende", p.mitarbeiter],
-                ["Ansprechpartner", p.inhaber],
+                ["Gegründet", p.seit ? String(p.seit) : "–"],
+                ["Mitarbeitende", p.mitarbeiter || "–"],
+                ["Ansprechpartner", p.inhaber || "–"],
                 ["Standort", p.ort],
               ].map(([k, v]) => (
                 <div key={k} className="bg-white p-5">
@@ -86,6 +113,13 @@ export default async function PartnerPage({ params }: { params: Promise<{ slug: 
                 </div>
               ))}
             </dl>
+
+            {(p.telefon || web) && (
+              <div className="mt-6 flex flex-wrap gap-3 text-sm">
+                {p.telefon && <a href={`tel:${p.telefon.replace(/[^\d+]/g, "")}`} className="rounded-full border border-line bg-white px-4 py-2 font-medium hover:border-forest/40">☎ {p.telefon}</a>}
+                {web && <a href={web} target="_blank" rel="noopener nofollow" className="rounded-full border border-line bg-white px-4 py-2 font-medium hover:border-forest/40">Website →</a>}
+              </div>
+            )}
 
             {refs.length > 0 && (
               <section className="mt-10">
@@ -96,11 +130,13 @@ export default async function PartnerPage({ params }: { params: Promise<{ slug: 
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                   {refs.map((r) => (
                     <figure key={r.id} className="overflow-hidden rounded-3xl border border-line bg-white">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={r.bild} alt="" className="aspect-[4/3] w-full object-cover" />
+                      {r.bild && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={r.bild} alt={r.titel} className="aspect-[4/3] w-full object-cover" />
+                      )}
                       <figcaption className="p-4">
                         <p className="font-semibold leading-snug">{r.titel}</p>
-                        <p className="mt-1 text-xs text-muted">{r.ort} · {r.jahr} · {r.tuer}</p>
+                        <p className="mt-1 text-xs text-muted">{[r.ort, r.jahr, r.tuer].filter(Boolean).join(" · ")}</p>
                       </figcaption>
                     </figure>
                   ))}
@@ -112,15 +148,14 @@ export default async function PartnerPage({ params }: { params: Promise<{ slug: 
               <div className="mt-10 flex gap-4 rounded-3xl bg-stone p-6">
                 <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-forest text-mint">{Check}</span>
                 <p className="text-sm leading-relaxed text-ink/80">
-                  <strong className="text-ink">Persönlich geprüft.</strong> Das Hyloft-Team hat mit {p.inhaber} gesprochen
-                  und die Angaben zu Leistungen und Einsatzgebiet bestätigt.
+                  <strong className="text-ink">Persönlich geprüft.</strong> Das Hyloft-Team hat mit dem Betrieb gesprochen und die Angaben zu Leistungen und Einsatzgebiet vor der Freischaltung bestätigt. Das Siegel ist keine Qualitätsgarantie für einzelne Arbeiten.
                 </p>
               </div>
             )}
           </div>
 
           <aside className="lg:sticky lg:top-28 lg:self-start">
-            <ContactForm firma={p.firma} />
+            <ContactForm firma={p.firma} slug={p.slug} gewerk={p.gewerk} />
           </aside>
         </div>
 
@@ -130,7 +165,7 @@ export default async function PartnerPage({ params }: { params: Promise<{ slug: 
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               {aehnliche.map((x) => (
                 <Link key={x.slug} href={`/partner/${x.slug}`} className="flex items-center gap-4 rounded-3xl border border-line bg-white p-5 hover:border-forest/30">
-                  <Avatar firma={x.firma} />
+                  <Avatar firma={x.firma} logo={x.logo} />
                   <span>
                     <span className="block font-semibold">{x.firma}</span>
                     <span className="block text-sm text-muted">{x.ort}</span>

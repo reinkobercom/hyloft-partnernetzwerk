@@ -10,6 +10,15 @@ export const SEO_TEXTE: Record<string, { intro: string; achten: string[]; faq: [
       ["Plant ein Innenarchitekt auch Lofttüren und Glastrennwände?", "Ja. Viele Innenarchitekten im Partnernetz haben Erfahrung mit Stahl-Glas-Elementen und stimmen Profile, Glas und Sprossenteilung auf den Raum ab."],
     ],
   },
+  architektur: {
+    intro: "Architekten planen Neubauten und Umbauten von der ersten Idee über den Bauantrag bis zur Bauleitung. Bei Umbauten im Bestand klären sie Statik, Genehmigungen und die Abstimmung aller Gewerke – auch, wenn Wände für offene Grundrisse oder Lofttüren geöffnet werden.",
+    achten: ["Erfahrung mit vergleichbaren Projekten (Neubau, Umbau, Bestand)", "Klare Vereinbarung zu Leistungsphasen und Honorar", "Gute Erreichbarkeit während der Bauphase"],
+    faq: [
+      ["Brauche ich für einen Umbau einen Architekten?", "Das hängt vom Vorhaben ab. Für genehmigungspflichtige Umbauten oder Eingriffe in tragende Bauteile ist eine fachkundige Planung meist nötig. Ob eine Genehmigung erforderlich ist, klären Sie am besten frühzeitig mit einem Architekten oder dem Bauamt."],
+      ["Was ist der Unterschied zwischen Architekt und Innenarchitekt?", "Architekten planen Gebäude insgesamt – inklusive Tragwerk, Hülle und Genehmigung. Innenarchitekten konzentrieren sich auf Innenräume, Materialien, Licht und Ausbau. Bei vielen Umbauten arbeiten beide zusammen."],
+      ["Plant ein Architekt auch Lofttüren und Glastrennwände ein?", "Ja. Architekten legen Öffnungsmaße, Stürze und Anschlüsse fest. Stahl-Glas-Elemente werden anschließend nach Aufmaß gefertigt."],
+    ],
+  },
   tischlerei: {
     intro: "Tischler und Schreiner fertigen Möbel, Einbauten und Innenausbauten nach Maß. Bei Lofttüren übernehmen sie oft die Anpassung von Laibungen, Zargen oder angrenzenden Einbauschränken.",
     achten: ["Meisterbetrieb mit eigener Werkstatt", "Referenzfotos von vergleichbaren Arbeiten", "Realistische Terminplanung und schriftliches Angebot"],
@@ -60,6 +69,7 @@ export const SEO_TEXTE: Record<string, { intro: string; achten: string[]; faq: [
 /** Artikel-Slug, der zu einem Gewerk passt */
 export const ARTIKEL_ZU_GEWERK: Record<string, string> = {
   innenarchitektur: "innenarchitekt-beauftragen",
+  architektur: "wanddurchbruch-fuer-lofttuer",
   tischlerei: "lofttuer-im-altbau",
   innenausbau: "lofttuer-im-altbau",
   trockenbau: "wanddurchbruch-fuer-lofttuer",

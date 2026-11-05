@@ -148,7 +148,7 @@ const BASIS: Artikel[] = [
 // Ausführliche Entwürfe (zur fachlichen Freigabe durch Hyloft) ersetzen die Kurzfassungen
 export const ARTIKEL: Artikel[] = BASIS.map((a) => {
   const e = ENTWUERFE.find((x) => x.slug === a.slug);
-  return e ? { ...a, ...e, entwurf: true } : a;
+  return e ? { ...a, ...e } : a;
 });
 
 export const artikelBySlug = (slug: string) => ARTIKEL.find((a) => a.slug === slug);

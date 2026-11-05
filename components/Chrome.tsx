@@ -17,14 +17,6 @@ export function Logo({ light = false }: { light?: boolean }) {
   );
 }
 
-export function DemoBanner() {
-  return (
-    <div className="bg-forest-deep px-4 py-1.5 text-center text-[0.7rem] font-medium tracking-wide text-mint-strong">
-      Prototyp · Alle Firmenprofile sind erfundene Beispielprofile
-    </div>
-  );
-}
-
 export function Header({ overlay = false }: { overlay?: boolean }) {
   return (
     <header className={overlay ? "absolute inset-x-0 top-0 z-30" : "sticky top-0 z-30 border-b border-line bg-[#fbfaf8]/90 backdrop-blur"}>
@@ -81,7 +73,7 @@ export function Footer() {
             <li><Link href="/anfrage" className="hover:text-white">Eine Anfrage an mehrere</Link></li>
             <li><Link href="/regionen" className="hover:text-white">Betriebe nach Region</Link></li>
             <li><Link href="/blog" className="hover:text-white">Ratgeber & Blog</Link></li>
-            <li><a href="https://www.hyloft.de" className="hover:text-white">Lofttür konfigurieren</a></li>
+            <li><a href="https://www.hyloft.de" target="_blank" rel="noopener" className="hover:text-white">Lofttür konfigurieren</a></li>
             <li><a href="https://www.hyloft.de" className="hover:text-white">Showroom Lüdinghausen</a></li>
           </ul>
         </div>
@@ -91,15 +83,17 @@ export function Footer() {
             <li><Link href="/fuer-partner" className="hover:text-white">Kostenlos eintragen</Link></li>
             <li><Link href="/login" className="hover:text-white">Partner-Login</Link></li>
             <li><a href="mailto:info@hyloft.de" className="hover:text-white">info@hyloft.de</a></li>
+            <li><a href="tel:+491725374847" className="hover:text-white">+49 172 5374847</a></li>
           </ul>
         </div>
       </div>
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-5 text-xs text-white/50 sm:flex-row sm:justify-between sm:px-6">
           <span>© {new Date().getFullYear()} Hyloft GmbH</span>
-          <span className="flex gap-5">
-            <a href="https://www.hyloft.de" className="hover:text-white">Impressum</a>
-            <a href="https://www.hyloft.de" className="hover:text-white">Datenschutz</a>
+          <span className="flex flex-wrap gap-5">
+            <Link href="/impressum" className="hover:text-white">Impressum</Link>
+            <Link href="/datenschutz" className="hover:text-white">Datenschutz</Link>
+            <Link href="/partnerbedingungen" className="hover:text-white">Partnerbedingungen</Link>
           </span>
         </div>
       </div>

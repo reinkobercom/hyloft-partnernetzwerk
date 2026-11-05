@@ -3,9 +3,10 @@ import { Header, Footer } from "@/components/Chrome";
 import SearchBar from "@/components/SearchBar";
 import PartnerCard from "@/components/PartnerCard";
 import PartnerMapLazy from "@/components/PartnerMapLazy";
-import { GEWERKE, gewerkBySlug, initialen, ortByName, suche } from "@/lib/data";
+import { GEWERKE, gewerkBySlug, initialen, suche } from "@/lib/data";
+import { livePartner } from "@/lib/repo";
 
-export const metadata = { title: "Partner finden – Hyloft Partnernetz" };
+export const metadata = { title: "Partner finden – Hyloft Partnernetz", alternates: { canonical: "/suche" } };
 
 export default async function SuchePage({
   searchParams,
@@ -14,7 +15,7 @@ export default async function SuchePage({
 }) {
   const { was = "", wo = "", ansicht } = await searchParams;
   const karte = ansicht === "karte";
-  const { treffer, gewerk, ort } = suche(was, wo);
+  const { treffer, gewerk, ort } = suche(await livePartner(), was, wo);
 
   const titel = [gewerk ? gewerk.plural : was ? `„${was}“` : "Fachbetriebe", ort ? `in der Nähe von ${ort.name}` : "in NRW"].join(" ");
 
@@ -26,10 +27,9 @@ export default async function SuchePage({
     return `/suche${s ? `?${s}` : ""}`;
   };
 
-  const punkte = treffer.map((p) => {
-    const o = ortByName(p.ort)!;
-    return { slug: p.slug, firma: p.firma, gewerk: gewerkBySlug(p.gewerk)?.name ?? "", ort: p.ort, lat: o.lat, lng: o.lng, initialen: initialen(p.firma), distanz: p.distanz };
-  });
+  const punkte = treffer.map((p) => ({
+    slug: p.slug, firma: p.firma, gewerk: gewerkBySlug(p.gewerk)?.name ?? "", ort: p.ort, lat: p.lat, lng: p.lng, initialen: initialen(p.firma), distanz: p.distanz,
+  }));
 
   const anfrageLink = `/anfrage?${new URLSearchParams({ ...(gewerk ? { gewerk: gewerk.slug } : {}), ...(wo ? { wo } : {}) })}`;
 
@@ -63,7 +63,7 @@ export default async function SuchePage({
           <div>
             <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{titel}</h1>
             <p className="mt-1 text-sm text-muted">
-              {treffer.length} {treffer.length === 1 ? "Betrieb" : "Betriebe"} gefunden
+              {treffer.length === 0 ? "Noch keine Betriebe" : `${treffer.length} ${treffer.length === 1 ? "Betrieb" : "Betriebe"} gefunden`}
             </p>
           </div>
           <div className="inline-flex self-start rounded-full border border-line bg-white p-1 text-sm font-medium sm:self-auto">
@@ -90,9 +90,9 @@ export default async function SuchePage({
 
         {treffer.length === 0 ? (
           <div className="mt-6 rounded-3xl border border-dashed border-line bg-white p-10 text-center">
-            <p className="text-lg font-semibold">Hier ist noch kein Partner eingetragen.</p>
+            <p className="text-lg font-semibold">{ort || gewerk ? "Für diese Suche ist noch kein Betrieb eingetragen." : "Das Partnernetz ist im Aufbau."}</p>
             <p className="mx-auto mt-2 max-w-md text-sm text-muted">
-              Unser Netzwerk wächst gerade. Stellen Sie eine Anfrage – wir empfehlen Ihnen persönlich einen Betrieb aus unserem Umfeld.
+              Unser Netzwerk wächst gerade. Beschreiben Sie Ihr Projekt – wir empfehlen Ihnen persönlich einen passenden Betrieb aus unserem Umfeld.
             </p>
             <Link href={anfrageLink} className="mt-6 inline-block rounded-full bg-forest px-6 py-3 text-sm font-semibold text-white">
               Empfehlung anfragen

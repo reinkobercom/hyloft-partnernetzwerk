@@ -1,38 +1,40 @@
-# Hyloft Partnernetz – Klickdummy
+# Hyloft Partnernetz
 
-Prototyp einer B2B-Plattform: Bauherren finden Fachbetriebe (Innenarchitekten, Tischler, Innenausbauer …) in NRW,
-Betriebe tragen sich kostenlos ein. Jede Registrierung landet im Status „In Prüfung“ und wird erst nach einem
-Freischaltungsanruf durch Hyloft live.
+Plattform unter **partner.hyloft.de**: Bauherren finden geprüfte Fachbetriebe (Innenarchitekten, Architekten, Tischler,
+Innenausbauer, Trockenbauer, Maler, Bodenleger) in NRW. Betriebe tragen sich kostenlos ein, Hyloft prüft und schaltet frei.
 
-**Stand:** Klickdummy ohne Backend. Alle Firmenprofile sind erfundene Beispielprofile, Formulare speichern nichts.
+## Technik
 
-## Seiten
+- Next.js (App Router) auf Vercel, Postgres (Supabase, Region Frankfurt)
+- Login im Projekt selbst: Passwort (scrypt) oder Einmal-Link per E-Mail, Sitzung als httpOnly-Cookie (30 Tage)
+- Bilder liegen in der Datenbank (Tabelle `dateien`), werden im Browser verkleinert und unter `/api/datei/[id]` ausgeliefert
+- E-Mails über Resend; ohne `RESEND_API_KEY` werden sie nur im Admin unter „E-Mails“ protokolliert
+- Datenbank-Migrationen in `db/*.sql` laufen automatisch vor jedem Build (`scripts/migrate.mjs`)
+
+## Bereiche
 
 | Pfad | Inhalt |
 |---|---|
-| `/` | Startseite mit zentraler Was/Wo-Suche |
-| `/suche?was=…&wo=…` | Trefferliste, sortiert nach Entfernung |
-| `/partner/[slug]` | Partnerprofil mit Anfrageformular |
-| `/fuer-partner` | Landingpage für Betriebe (Ziel der Outbound-Mails) |
-| `/registrieren` | 3-stufige Registrierung |
-| `/partnerbereich` | Partnerbereich: Status, Profil-Fortschritt, Lofttür-Partnerservice |
-| `/login` | Demo-Login |
-| `/blog`, `/blog/[slug]` | Ratgeber; ausführliche Entwürfe in `lib/artikel-entwuerfe.ts` (Freigabe ausstehend) |
+| `/` | Startseite mit Was/Wo-Suche |
+| `/suche` | Liste und Karte |
+| `/partner/[slug]` | Profil mit Anfrageformular |
 | `/anfrage` | Eine Anfrage an bis zu 3 Betriebe |
-| `/[gewerk]/[stadt]` | 120 SEO-Seiten, z. B. `/tischler/muenster`; Übersicht unter `/regionen` |
-| `/admin` | Admin: Freischaltungen, Partner, Anfragen, Referenzprojekte, E-Mail-Vorlagen |
+| `/[gewerk]/[stadt]` | Seiten wie `/tischler/muenster` für 7 Gewerke × 209 Städte (ohne Partner: noindex) |
+| `/fuer-partner`, `/registrieren` | Akquise und Registrierung für Betriebe |
+| `/partnerbereich` | Profil, Fotos, Anfragen, Statistik, Siegel, Partnerservice |
+| `/admin` | Registrierungen, Partner + Logins, Anfragen, Partnerservice, Referenzprojekte, E-Mail-Protokoll, Team |
+| `/setup?token=…` | Einmalige Einrichtung des Admin-Passworts |
+| `/impressum`, `/datenschutz`, `/partnerbedingungen` | Rechtstexte (Entwürfe, anwaltliche Prüfung ausstehend) |
 
-## Entwicklung
+## Lokal starten
 
 ```bash
+cp .env.example .env.local   # DATABASE_URL eintragen
 npm install
+npm run db:migrate
 npm run dev
 ```
 
-Daten: `lib/data.ts` (Gewerke, Orte, Beispielpartner).
+## Datenquellen
 
-## Nächste Ausbaustufe
-
-- Datenbank (z. B. Supabase) für Profile und Logins
-- Registrierung per Webhook an Zapier → Pipedrive (Deal „Freischaltungsanruf“)
-- Freischaltung durch das Hyloft-Team, Upload von Logo und Referenzfotos
+Orte: Destatis Gemeindeverzeichnis (dl-de/by-2-0), Koordinaten und PLZ: GeoNames (CC BY 4.0), Karte: © OpenStreetMap-Mitwirkende.

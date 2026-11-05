@@ -132,7 +132,7 @@ export default function SearchBar({
   const [wo, setWo] = useState(initialWo);
 
   const gewerkOptions: Option[] = GEWERKE.map((g) => ({ value: g.slug, label: g.name, hint: g.kurz }));
-  const ortOptions: Option[] = ORTE.map((o) => ({ value: o.plz, label: o.name, hint: o.plz }));
+  const ortOptions: Option[] = ORTE.map((o) => ({ value: o.slug, label: o.name, hint: `${o.plz} · ${o.kreis}` }));
 
   return (
     <form
