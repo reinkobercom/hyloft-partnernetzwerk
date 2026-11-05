@@ -43,7 +43,7 @@ export default async function Home() {
           <p className="rise rise-3 mt-6 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg">
             Innenarchitekten, Tischler und Innenausbauer in Ihrer Nähe – persönlich geprüft vom Hyloft-Team.
           </p>
-          <div className="rise rise-4 mt-10 w-full max-w-3xl">
+          <div className="rise rise-4 relative z-30 mt-10 w-full max-w-3xl">
             <SearchBar big />
           </div>
           <div className="rise rise-4 mt-6 flex flex-wrap justify-center gap-2">

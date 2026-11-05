@@ -37,7 +37,7 @@ export default async function SuchePage({
     <>
       <Header />
       <main className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="mx-auto max-w-3xl pt-10">
+        <div className="relative z-20 mx-auto max-w-3xl pt-10">
           <SearchBar initialWas={was} initialWo={wo} />
         </div>
 

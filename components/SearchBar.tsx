@@ -75,6 +75,10 @@ function Field({
               big ? "text-base sm:text-lg" : "text-sm"
             }`}
             autoComplete="off"
+            data-1p-ignore
+            data-lpignore="true"
+            data-bwignore
+            data-form-type="other"
           />
         </span>
       </label>
